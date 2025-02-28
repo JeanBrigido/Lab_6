@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, Button, Box } from '@mui/material';
+import { useAuthContext } from "@asgardeo/auth-react";
 
 const EmployeeManagement = () => {
+  const { state, signIn, signOut } = useAuthContext();
   const [employees, setEmployees] = useState([]);
   const [form, setForm] = useState({ first_name: '', last_name: '', email: '', birthdate: '', salary: '' });
   const [editing, setEditing] = useState(false);
@@ -64,85 +66,107 @@ const EmployeeManagement = () => {
   };
 
   return (
+    
     <Container sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>Employee Management</Typography>
+      {
+        state.isAuthenticated
+          ? (
+            <div>
+               <Typography variant="h4" gutterBottom>Employee Management</Typography>
 
-      {/* Employee List */}
-      <TableContainer component={Paper} sx={{ mb: 4 }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>First Name</TableCell>
-              <TableCell>Last Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Birthdate</TableCell>
-              <TableCell>Salary</TableCell>
-              <TableCell>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {employees.map((emp) => (
-              <TableRow key={emp.employee_id}>
-                <TableCell>{emp.first_name}</TableCell>
-                <TableCell>{emp.last_name}</TableCell>
-                <TableCell>{emp.email}</TableCell>
-                <TableCell>{new Date(emp.birthdate).toLocaleDateString()}</TableCell>
-                <TableCell>{emp.salary}</TableCell>
-                <TableCell>
-                  <Button variant="contained" color="primary" onClick={() => handleEdit(emp)}>Edit</Button>
-                  <Button variant="contained" color="secondary" onClick={() => handleDelete(emp.employee_id)}>Delete</Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+          {/* Employee List */}
+          <TableContainer component={Paper} sx={{ mb: 4 }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>First Name</TableCell>
+                  <TableCell>Last Name</TableCell>
+                  <TableCell>Email</TableCell>
+                  <TableCell>Birthdate</TableCell>
+                  <TableCell>Salary</TableCell>
+                  <TableCell>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {employees.map((emp) => (
+                  <TableRow key={emp.employee_id}>
+                    <TableCell>{emp.first_name}</TableCell>
+                    <TableCell>{emp.last_name}</TableCell>
+                    <TableCell>{emp.email}</TableCell>
+                    <TableCell>{new Date(emp.birthdate).toLocaleDateString()}</TableCell>
+                    <TableCell>{emp.salary}</TableCell>
+                    <TableCell>
+                      <Button variant="contained" color="primary" onClick={() => handleEdit(emp)}>Edit</Button>
+                      <Button variant="contained" sx={{ backgroundColor: 'red', color: 'white' }} onClick={() => handleDelete(emp.employee_id)}>Delete</Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
 
-      {/* Add/Edit Employee Form */}
-      <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2, maxWidth: 400, margin: '0 auto' }}>
-        <TextField
-          label="First Name"
-          name="first_name"
-          value={form.first_name}
-          onChange={handleChange}
-          required
-        />
-        <TextField
-          label="Last Name"
-          name="last_name"
-          value={form.last_name}
-          onChange={handleChange}
-          required
-        />
-        <TextField
-          label="Email"
-          type="email"
-          name="email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
-        <TextField
-          label="Birthdate"
-          type="date"
-          name="birthdate"
-          value={form.birthdate}
-          onChange={handleChange}
-          InputLabelProps={{ shrink: true }}
-          required
-        />
-        <TextField
-          label="Salary"
-          type="number"
-          name="salary"
-          value={form.salary}
-          onChange={handleChange}
-          required
-        />
-        <Button variant="contained" color="primary" type="submit">
-          {editing ? 'Update Employee' : 'Add Employee'}
-        </Button>
-      </Box>
+          {/* Add/Edit Employee Form */}
+          <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2, maxWidth: 400, margin: '0 auto' }}>
+            <TextField
+              label="First Name"
+              name="first_name"
+              value={form.first_name}
+              onChange={handleChange}
+              required
+            />
+            <TextField
+              label="Last Name"
+              name="last_name"
+              value={form.last_name}
+              onChange={handleChange}
+              required
+            />
+            <TextField
+              label="Email"
+              type="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              required
+            />
+            <TextField
+              label="Birthdate"
+              type="date"
+              name="birthdate"
+              value={form.birthdate}
+              onChange={handleChange}
+              InputLabelProps={{ shrink: true }}
+              required
+            />
+            <TextField
+              label="Salary"
+              type="number"
+              name="salary"
+              value={form.salary}
+              onChange={handleChange}
+              required
+            />
+            <Button variant="contained" color="primary" type="submit">
+              {editing ? 'Update Employee' : 'Add Employee'}
+            </Button>
+          </Box>
+
+              <button onClick={() => signOut()}>Logout</button>
+            </div>
+          )
+          :  <Box sx={{ display: 'fixed', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => signIn()}
+            sx={{ fontSize: '1.5rem', padding: '10px 20px' }}
+          >
+            Login
+          </Button>
+        </Box>
+          
+      }
+
     </Container>
   );
 };

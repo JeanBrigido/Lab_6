@@ -4,7 +4,7 @@ body {
   /* border: solid; */
   margin: 0;
   padding: 0;
-  background-color: lightgrey;
+  background-color: #d3d3d3;
   color: #333;
  }
  
@@ -70,7 +70,7 @@ body {
  }
  
  table th {
-     background-color: #cc5500; /* Burnt Orange */
+     background-color: green; /* Burnt Orange */
      color: #ffffff; /* White */
  }
  

@@ -3,8 +3,8 @@ import { Card, CardContent, Typography, Box } from '@mui/material';
 
 const Home = () => {
   return (
-    <Box sx={{ backgroundColor: '#333', minHeight: '100vh', padding: '20px' }}>
-      <Card sx={{ backgroundColor: 'lightgray', marginBottom: '20px', maxWidth: '800px', margin: '20px auto', padding: '20px' }}>
+    <Box sx={{ backgroundColor: '#d3d3d3', minHeight: '100vh', padding: '20px' }}>
+      <Card sx={{ backgroundColor: 'white', marginBottom: '20px', maxWidth: '800px', margin: '20px auto', padding: '20px' }}>
         <CardContent>
           <Typography variant="h2" sx={{ fontSize: '2rem' }}>Highlights</Typography>
           <Typography variant="h3" sx={{ fontSize: '1.5rem' }}>Remember to live out our values</Typography>
@@ -23,7 +23,7 @@ const Home = () => {
         </CardContent>
       </Card>
 
-      <Card sx={{ backgroundColor: 'lightgray', marginBottom: '20px', maxWidth: '800px', margin: '20px auto', padding: '20px' }}>
+      <Card sx={{ backgroundColor: 'white', marginBottom: '20px', maxWidth: '800px', margin: '20px auto', padding: '20px' }}>
         <CardContent>
           <Typography variant="h2" sx={{ fontSize: '2rem' }}>Latest Event</Typography>
           <Typography variant="body1">
